@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>2050年 日本の「単身社会化と婚姻に関わる将来像」｜一次ソース＆分析ダッシュボード</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro JP", "Inter", "Hiragino Kaku Gothic ProN", sans-serif;
+      letter-spacing: -0.015em;
+    }
+
+    .transition-layout {
+      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #333336;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #6366f1;
+    }
+    @keyframes layoutPulse {
+      0% { opacity: 0.3; transform: scale(0.98); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .animate-layout-change {
+      animation: layoutPulse 0.35s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="bg-black text-slate-100 font-sans h-screen w-screen overflow-hidden antialiased select-none">
+
+  <!-- 画面回転時オーバーレイ -->
+  <div id="orientation-overlay" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-50 flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="w-12 h-12 rounded-2xl bg-indigo-600/30 border border-indigo-400/50 flex items-center justify-center text-indigo-400 animate-spin mb-3">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+      </svg>
+    </div>
+    <span class="text-xs font-semibold text-slate-300 tracking-wider" id="overlay-text">画面方向を最適化中...</span>
+  </div>
+
+  <!-- メインアプリコンテナ -->
+  <div id="app-container" class="flex flex-col landscape:flex-row h-full w-full transition-layout">
+
+    <!-- ナビゲーションバー (縦: 上部 / 横: 左サイドバー) -->
+    <aside class="bg-[#161617] border-b landscape:border-b-0 landscape:border-r border-white/10 p-3.5 flex flex-col justify-between shrink-0 landscape:w-64 landscape:h-full z-20 shadow-2xl backdrop-blur-xl">
+      
+      <div class="space-y-2.5">
+        <div class="flex items-center justify-between landscape:block">
+          <div>
+            <a href="../index.html" class="inline-block bg-white/10 hover:bg-white/20 text-slate-100 border border-white/15 text-[10px] font-bold px-3 py-1 rounded-full mb-1.5 transition shadow-sm">&larr; ダッシュボード一覧へ戻る</a><br>
+            <span class="inline-block bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 text-[10px] font-bold px-2.5 py-0.5 rounded-full">2050 未来データ分析</span>
+            <h1 class="text-xs font-extrabold text-white mt-1.5 leading-tight tracking-tight">単身社会化と婚姻に関わる将来像<br class="hidden landscape:block"><span class="text-slate-400 font-normal"> 一次ソース＆データ分析</span></h1>
+          </div>
+          <div class="flex items-center gap-1.5 text-[10px] bg-black/60 border border-white/10 px-2.5 py-1 rounded-full text-slate-400">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="portrait:inline landscape:hidden">縦表示</span>
+            <span class="portrait:hidden landscape:inline">横表示</span>
+          </div>
+        </div>
+
+        <!-- タブボタン -->
+        <nav class="flex landscape:flex-col gap-1.5 overflow-x-auto landscape:overflow-x-visible pt-1 landscape:pt-3">
+          <button onclick="switchTab('tab1')" id="btn-tab1" class="tab-btn shrink-0 whitespace-nowrap landscape:w-full text-left px-3.5 py-2.5 rounded-full text-xs font-bold transition flex items-center justify-between bg-indigo-600 text-white shadow-md">
+            <span>1. 2050年マクロトレンド</span>
+            <span class="text-[10px] opacity-75 hidden landscape:inline">▶</span>
+          </button>
+          <button onclick="switchTab('tab2')" id="btn-tab2" class="tab-btn shrink-0 whitespace-nowrap landscape:w-full text-left px-3.5 py-2.5 rounded-full text-xs font-bold transition flex items-center justify-between text-slate-400 hover:bg-white/10 hover:text-slate-200">
+            <span>2. 高齢層(65歳+)のリアル</span>
+            <span class="text-[10px] opacity-0 hidden landscape:inline">▶</span>
+          </button>
+          <button onclick="switchTab('tab3')" id="btn-tab3" class="tab-btn shrink-0 whitespace-nowrap landscape:w-full text-left px-3.5 py-2.5 rounded-full text-xs font-bold transition flex items-center justify-between text-slate-400 hover:bg-white/10 hover:text-slate-200">
+            <span>3. 現役世代(30-64歳)危機</span>
+            <span class="text-[10px] opacity-0 hidden landscape:inline">▶</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="hidden landscape:block text-[9px] text-slate-500 border-t border-white/10 pt-2.5 px-1 leading-relaxed">
+        データ出所: 国立社会保障・人口問題研究所「日本の世帯数の将来推計（令和6年推計）」・国勢調査・IBJ成婚白書
+      </div>
+    </aside>
+
+    <!-- メイン表示エリア (Apple Bento Card Grid) -->
+    <main id="main-content" class="flex-1 bg-black overflow-y-auto p-4 md:p-6 space-y-4">
+
+      <!-- ================= TAB 1: マクロトレンド ================= -->
+      <div id="tab1" class="tab-content space-y-4">
+        <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+          <h2 class="text-xs md:text-sm font-extrabold text-white flex items-center gap-2 tracking-tight">
+            <span class="w-3 h-3 rounded-full bg-indigo-500 shrink-0 shadow-lg shadow-indigo-500/50"></span>
+            2050年 マクロトレンド：ソロ社会化（世帯構造の激変）
+          </h2>
+          <span class="text-[10px] text-slate-400 shrink-0 font-mono">※2050年推計</span>
+        </div>
+
+        <div class="grid grid-cols-2 landscape:grid-cols-4 gap-3">
+          <div class="bg-[#161617] border border-white/10 p-3.5 rounded-2xl shadow-xl">
+            <div class="text-[10px] text-slate-400 font-bold">一般世帯総数</div>
+            <div class="text-lg font-black text-white mt-0.5 font-mono">5,261 <span class="text-xs font-normal text-slate-400 font-sans">万世帯</span></div>
+            <div class="text-[9px] text-rose-400 mt-0.5 font-semibold">2020年比 約310万減</div>
+          </div>
+          <div class="bg-[#161617] border border-white/10 p-3.5 rounded-2xl shadow-xl">
+            <div class="text-[10px] text-slate-400 font-bold">平均世帯人員</div>
+            <div class="text-lg font-black text-indigo-400 mt-0.5 font-mono">1.92 <span class="text-xs font-normal text-slate-400 font-sans">人</span></div>
+            <div class="text-[9px] text-amber-400 mt-0.5 font-semibold">2033年に2人を割る</div>
+          </div>
+          <div class="bg-[#161617] border border-indigo-500/40 p-3.5 rounded-2xl shadow-xl bg-indigo-950/20">
+            <div class="text-[10px] text-indigo-300 font-extrabold">単独世帯割合</div>
+            <div class="text-lg font-black text-indigo-400 mt-0.5 font-mono">44.3 %</div>
+            <div class="text-[9px] text-indigo-300 mt-0.5 font-semibold">2,330万世帯（主流へ）</div>
+          </div>
+          <div class="bg-[#161617] border border-white/10 p-3.5 rounded-2xl shadow-xl">
+            <div class="text-[10px] text-slate-400 font-bold">15歳以上男性未婚率</div>
+            <div class="text-lg font-black text-rose-400 mt-0.5 font-mono">36.5 %</div>
+            <div class="text-[9px] text-slate-400 mt-0.5 font-semibold">女性未婚率: 27.1%</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 landscape:grid-cols-12 gap-4 items-center">
+          <div class="landscape:col-span-6 bg-[#161617] p-3.5 rounded-3xl border border-white/10 h-60 landscape:h-56 flex flex-col justify-center shadow-2xl">
+            <canvas id="householdChart"></canvas>
+          </div>
+          <div class="landscape:col-span-6 bg-[#161617] p-4 rounded-3xl border border-white/10 space-y-2.5 shadow-2xl">
+            <div class="text-xs font-extrabold text-amber-400 flex items-center gap-1.5">
+              💡 重要サマリー（分析の要点）
+            </div>
+            <ul class="text-[11.5px] text-slate-200 space-y-2 list-disc list-inside leading-relaxed">
+              <li>「夫婦と子ども」という従来の標準世帯は<strong class="text-rose-400 font-black">全体の約2割（21.5%）</strong>のマイノリティへ後退。</li>
+              <li>2050年には日本の<strong class="text-indigo-300 font-black">世帯の半数近く（44.3%）が「一人暮らし」</strong>というソロ社会が到来。</li>
+              <li>家族に依存しない前提での人生設計、または早めのパートナー形成が不可避な時代へ突入する。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 2: 高齢層のリアル ================= -->
+      <div id="tab2" class="tab-content hidden space-y-4">
+        <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+          <h2 class="text-xs md:text-sm font-extrabold text-white flex items-center gap-2 tracking-tight">
+            <span class="w-3 h-3 rounded-full bg-rose-500 shrink-0 shadow-lg shadow-rose-500/50"></span>
+            高齢層（65歳以上）のリアル：激変する「おひとりさまの老後」
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 landscape:grid-cols-2 gap-4">
+          <div class="bg-[#161617] p-4.5 rounded-3xl border border-white/10 space-y-3 shadow-2xl">
+            <div class="text-xs font-extrabold text-slate-200">65歳以上 高齢単身世帯の規模</div>
+            <div class="flex justify-between items-baseline">
+              <span class="text-3xl font-black text-rose-400 font-mono">1,084 <span class="text-xs font-normal text-slate-300 font-sans">万世帯</span></span>
+              <span class="text-xs text-slate-400">高齢世帯全体の <strong class="text-white font-black">45.1%</strong></span>
+            </div>
+            <div class="border-t border-white/10 pt-2.5 grid grid-cols-2 gap-2.5 text-[11px]">
+              <div class="bg-black/40 p-2.5 rounded-xl border border-white/10">
+                <span class="text-slate-400 font-bold">男性世帯主単身</span>
+                <div class="font-black text-slate-100 text-base mt-0.5 font-mono">29.0% <span class="text-[10px] text-slate-400 font-normal font-sans">(451万人)</span></div>
+              </div>
+              <div class="bg-black/40 p-2.5 rounded-xl border border-white/10">
+                <span class="text-slate-400 font-bold">女性世帯主単身</span>
+                <div class="font-black text-pink-400 text-base mt-0.5 font-mono">74.5% <span class="text-[10px] text-slate-400 font-normal font-sans">(633万人)</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-[#161617] p-4.5 rounded-3xl border border-rose-900/50 bg-rose-950/20 space-y-2.5 shadow-2xl">
+            <div class="text-xs font-extrabold text-rose-300 flex items-center justify-between">
+              <span>高齢単身者における「未婚者」の割合</span>
+              <span class="text-[10px] bg-rose-500/20 text-rose-300 px-2.5 py-0.5 rounded-full font-bold">未婚高齢者 約460万人</span>
+            </div>
+            <div class="h-40">
+              <canvas id="seniorUnmarriedChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-[#161617] p-4.5 rounded-2xl border border-white/10 text-[11.5px] text-slate-200 leading-relaxed space-y-1.5 shadow-lg">
+          <div class="font-extrabold text-rose-400">⚠️ 究極の孤立リスク「未婚の高齢単身者 約460万人」</div>
+          <div>かつての高齢単身は配偶者との「死別」が主流であったが、2050年には男性高齢単身者の<strong class="text-white font-black">約6割（59.7%）が「未婚」</strong>。配偶者だけでなく子供や孫といった近親者が存在しないため、緊急時や認知機能低下時の頼り先がない社会問題へ直結する。</div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 3: 現役世代の危機 ================= -->
+      <div id="tab3" class="tab-content hidden space-y-4">
+        <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+          <h2 class="text-xs md:text-sm font-extrabold text-white flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-amber-500 shrink-0 shadow-lg shadow-amber-500/50"></span>
+            現役世代（30歳〜64歳）：将来の単身高齢者予備軍
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 landscape:grid-cols-3 gap-3.5">
+          <div class="bg-[#161617] p-4 rounded-2xl border border-white/10 shadow-lg">
+            <div class="text-[10px] text-slate-400 font-bold">同年代の総世帯数</div>
+            <div class="text-xl font-black text-white font-mono mt-0.5">2,389 <span class="text-xs font-normal text-slate-400 font-sans">万世帯</span></div>
+          </div>
+          <div class="bg-[#161617] p-4 rounded-2xl border border-white/10 shadow-lg">
+            <div class="text-[10px] text-slate-400 font-bold">同年代の単身世帯規模</div>
+            <div class="text-xl font-black text-amber-400 font-mono mt-0.5">867 <span class="text-xs font-normal text-slate-400 font-sans">万世帯 (36.3%)</span></div>
+          </div>
+          <div class="bg-[#161617] p-4 rounded-2xl border border-white/10 shadow-lg">
+            <div class="text-[10px] text-slate-400 font-bold">単身世帯の性別内訳</div>
+            <div class="text-xs font-bold text-slate-200 mt-1.5">男性 61.8% (536万) / 女性 38.2% (332万)</div>
+          </div>
+        </div>
+
+        <div class="bg-[#161617] border border-amber-500/30 p-4.5 rounded-3xl space-y-3.5 shadow-2xl">
+          <div class="flex items-center justify-between border-b border-white/10 pb-2">
+            <span class="text-xs font-extrabold text-amber-300">【現実と理論上限】30歳以降の未婚者が5年以内に結婚（成婚）できる確率</span>
+            <span class="text-[10px] text-slate-400 font-mono">出典: 国勢調査・多相生命表推論</span>
+          </div>
+          
+          <div class="grid grid-cols-3 gap-3 text-center">
+            <div class="bg-black/50 p-3 rounded-2xl border border-white/10">
+              <div class="text-[10px] text-slate-400 font-bold">30歳〜34歳未婚</div>
+              <div class="text-lg font-black text-amber-400 font-mono mt-0.5">約 30〜35%</div>
+              <div class="text-[9px] text-amber-300/80 mt-0.5 font-semibold">※理論上の最大上限値</div>
+            </div>
+            <div class="bg-black/50 p-3 rounded-2xl border border-white/10">
+              <div class="text-[10px] text-slate-400 font-bold">35歳〜39歳未婚</div>
+              <div class="text-lg font-black text-rose-400 font-mono mt-0.5">約 15〜20%</div>
+              <div class="text-[9px] text-amber-300/80 mt-0.5 font-semibold">※理論上の最大上限値</div>
+            </div>
+            <div class="bg-black/50 p-3 rounded-2xl border border-white/10">
+              <div class="text-[10px] text-slate-400 font-bold">40歳以上未婚</div>
+              <div class="text-lg font-black text-rose-500 font-mono mt-0.5">約 10〜11%</div>
+              <div class="text-[9px] text-rose-400 mt-0.5 font-semibold">※実質的な30代以降の水準</div>
+            </div>
+          </div>
+
+          <div class="text-[11.5px] text-slate-200 leading-relaxed bg-black/60 p-3.5 rounded-2xl border border-white/10 space-y-2">
+            <div class="text-amber-300 font-extrabold flex items-center gap-1.5 border-b border-white/10 pb-1.5">
+              <span>⚠️</span>
+              <span>数値に関する重大な注記と実質的な厳しさ</span>
+            </div>
+            <div>
+              ・<strong>最大上限値（ベストケース）の定義：</strong><br>
+              上記に示す30代前半（30〜35%）等の数値は、<strong class="text-amber-200 font-bold">対象年齢層の全員が結婚相談所などの成婚率の高い環境で能動的に婚活を行ったと仮定した場合の「理論上の最大上限値（ポテンシャル）」</strong>です。
+            </div>
+            <div>
+              ・<strong>現実の厳しさと実質的な成婚率：</strong><br>
+              自然な出会いや放置状態を含めた実際の結婚環境は遥かに過酷です。引用している一次ソース（国勢調査および多相生命表等の動態データ）が示す実態に照らすと、<strong class="text-rose-400 font-bold">実質的には「40歳未満の予測値（約10〜15%前後）」が、実際の30代以降全体のリアルな成婚率（実効値）と考えて遜色ない</strong>という厳しい現実が存在します。
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // タブ切り替え
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
+        el.classList.add('text-slate-400');
+        const arrow = el.querySelector('span:last-child');
+        if (arrow) arrow.classList.add('opacity-0');
+      });
+
+      const activeContent = document.getElementById(tabId);
+      activeContent.classList.remove('hidden');
+      activeContent.classList.add('animate-layout-change');
+      
+      const activeBtn = document.getElementById('btn-' + tabId);
+      activeBtn.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
+      activeBtn.classList.remove('text-slate-400');
+      
+      const activeArrow = activeBtn.querySelector('span:last-child');
+      if (activeArrow) activeArrow.classList.remove('opacity-0');
+
+      if (window.householdChartObj) window.householdChartObj.resize();
+      if (window.seniorUnmarriedChartObj) window.seniorUnmarriedChartObj.resize();
+    }
+
+    // チャート1: 2050年世帯構成
+    function initCharts() {
+      const ctx1 = document.getElementById('householdChart').getContext('2d');
+      window.householdChartObj = new Chart(ctx1, {
+        type: 'doughnut',
+        data: {
+          labels: ['単独世帯 (44.3%)', '夫婦と子供 (21.5%)', '夫婦のみ (18.9%)', 'その他 (15.3%)'],
+          datasets: [{
+            data: [44.3, 21.5, 18.9, 15.3],
+            backgroundColor: ['#6366f1', '#2997ff', '#30d158', '#86868b']
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'right', labels: { color: '#f5f5f7', font: { size: 10, weight: 'bold' }, boxWidth: 10 } },
+            title: { display: true, text: '2050年 世帯構造予測', color: '#ffffff', font: { size: 12, weight: 'bold' } }
+          }
+        }
+      });
+
+      // チャート2: 高齢単身者の未婚率
+      const ctx2 = document.getElementById('seniorUnmarriedChart').getContext('2d');
+      window.seniorUnmarriedChartObj = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+          labels: ['男性高齢単身', '女性高齢単身'],
+          datasets: [
+            { label: '未婚率 (%)', data: [59.7, 30.2], backgroundColor: ['#ff3b30', '#af52de'] },
+            { label: '離死別等 (%)', data: [40.3, 69.8], backgroundColor: ['#333336', '#475569'] }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { stacked: true, ticks: { color: '#f5f5f7', font: { size: 10, weight: 'bold' } } },
+            y: { stacked: true, max: 100, ticks: { color: '#86868b', font: { size: 9 } } }
+          },
+          plugins: {
+            legend: { position: 'top', labels: { color: '#f5f5f7', font: { size: 9, weight: 'bold' }, boxWidth: 8 } }
+          }
+        }
+      });
+    }
+
+    // 画面回転時トランジション
+    let orientationTimeout;
+    function handleOrientationChange() {
+      const overlay = document.getElementById('orientation-overlay');
+      const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+      
+      overlay.classList.remove('opacity-0', 'pointer-events-none');
+      document.getElementById('overlay-text').innerText = isLandscape ? "横画面レイアウトに最適化中..." : "縦画面レイアウトに最適化中...";
+
+      clearTimeout(orientationTimeout);
+      orientationTimeout = setTimeout(() => {
+        if (window.householdChartObj) window.householdChartObj.resize();
+        if (window.seniorUnmarriedChartObj) window.seniorUnmarriedChartObj.resize();
+        
+        overlay.classList.add('opacity-0', 'pointer-events-none');
+        
+        const mainContent = document.getElementById('main-content');
+        mainContent.classList.remove('animate-layout-change');
+        void mainContent.offsetWidth;
+        mainContent.classList.add('animate-layout-change');
+      }, 350);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initCharts();
+
+      window.addEventListener('resize', () => {
+        if (window.householdChartObj) window.householdChartObj.resize();
+        if (window.seniorUnmarriedChartObj) window.seniorUnmarriedChartObj.resize();
+      });
+
+      if (window.matchMedia) {
+        window.matchMedia("(orientation: portrait)").addEventListener("change", handleOrientationChange);
+      } else {
+        window.addEventListener("orientationchange", handleOrientationChange);
+      }
+    });
+  </script>
+</body>
+</html>
