@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>少子化・人口減少統計データインテリジェンス LP | 一時管理区画</title>
+  <meta name="description" content="日本の出生数67.1万人、生涯無子率50%推計。人口爆縮のリアルな統計と、3大構造要因の解剖インテリジェンス。">
+  
+  <!-- Google Fonts & Chart.js -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Local CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="container">
+      <span class="hero-badge">THEME E: DEMOGRAPHICS INTELLIGENCE</span>
+      <h1 class="hero-title">「人口爆縮」と「超無子社会」の構造解剖</h1>
+      <p class="hero-lead">
+        少子化の本質は『夫婦あたりの子ども数減少』ではなく、『婚姻前の断絶』と『第一子の未誕生』にある。<br>
+        2025年最新統計と蓄積インテリジェンスが明かす冷徹な定量データ。
+      </p>
+
+      <!-- Navigation Quick Actions -->
+      <div class="hero-actions">
+        <a href="#metrics-section" class="btn-primary">核心指標データ &darr;</a>
+        <a href="#chart-section" class="btn-secondary">動的推移グラフ &darr;</a>
+        <a href="#factors-section" class="btn-secondary">3大要因解剖 &darr;</a>
+        <a href="#reports-section" class="btn-secondary">蓄積レポート全文 &darr;</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Big Numbers Section (DES-01) -->
+    <section class="metrics-section" id="metrics-section">
+      <h2 class="section-title">核心指標・ビッグナンバー</h2>
+      <p class="section-desc">スクロールによりカウントアップ表示される主要動態データ（各カードから詳細分析へダイレクト遷移）</p>
+      
+      <div class="metrics-grid">
+        <div class="metric-card" id="card-births">
+          <div>
+            <div class="metric-label">2025年 出生数 (過去最少)</div>
+            <div class="metric-value-wrap">
+              <span class="metric-value" data-target="671236">0</span>
+              <span class="metric-unit">人</span>
+            </div>
+            <div class="metric-subtext">防衛線70万人を大きく割り込む記録的低下</div>
+          </div>
+          <a href="#" class="metric-link btn-open-modal" data-id="report-summary">詳細レポートを開く &rarr;</a>
+        </div>
+
+        <div class="metric-card" id="card-childless">
+          <div>
+            <div class="metric-label">2045年 推計生涯無子率 (男性)</div>
+            <div class="metric-value-wrap">
+              <span class="metric-value" data-target="50.0" data-decimals="1">0</span>
+              <span class="metric-unit">%</span>
+            </div>
+            <div class="metric-subtext">男性の2人に1人、女性の4割が子どもを持たない</div>
+          </div>
+          <a href="#" class="metric-link btn-open-modal" data-id="report-summary">無子率シミュレーション詳細 &rarr;</a>
+        </div>
+
+        <div class="metric-card" id="card-korea">
+          <div>
+            <div class="metric-label">参考: 韓国合計特殊出生率</div>
+            <div class="metric-value-wrap">
+              <span class="metric-value" data-target="0.72" data-decimals="2">0</span>
+              <span class="metric-unit"></span>
+            </div>
+            <div class="metric-subtext">過酷な競合社会が生んだ世界最深刻値</div>
+          </div>
+          <a href="#" class="metric-link btn-open-modal" data-id="report-summary">国際比較データを開く &rarr;</a>
+        </div>
+
+        <div class="metric-card" id="card-yield">
+          <div>
+            <div class="metric-label">10年国債利回り (住宅ローン)</div>
+            <div class="metric-value-wrap">
+              <span class="metric-value" data-target="2.78" data-decimals="2">0</span>
+              <span class="metric-unit">%</span>
+            </div>
+            <div class="metric-subtext">金利高騰が若年層のマイホーム・結婚を圧迫</div>
+          </div>
+          <a href="#" class="metric-link btn-open-modal" data-id="report-summary">経済的ハードル詳細 &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Charts Section (DES-02) -->
+    <section class="chart-section" id="chart-section">
+      <h2 class="section-title">動的グラフィックス</h2>
+      <p class="section-desc">半世紀の推移と2045年までの無子化シミュレーション</p>
+
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-controls">
+            <button class="chart-btn active" id="btn-chart-births">年間出生数推移 (1970 - 2025)</button>
+            <button class="chart-btn" id="btn-chart-childless">生涯無子率予測 (1970 - 2045)</button>
+          </div>
+          <a href="#factors-section" style="color: var(--accent-blue); font-size: 0.85rem; font-weight: 700; text-decoration: none;">3大要因の解剖へ &darr;</a>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="demographicsChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 Factor Analysis Section -->
+    <section class="factors-section" id="factors-section">
+      <h2 class="section-title">3大構造要因の解剖</h2>
+      <p class="section-desc">インテリジェンス分析で抽出された背景メカニズム（クリックで詳細アーカイブを開く）</p>
+
+      <div class="factors-grid">
+        <div class="factor-card">
+          <div>
+            <span class="factor-tag">カテゴリ A</span>
+            <h3 class="factor-title">婚姻前の断絶と男余り</h3>
+            <p class="factor-text">適齢期における数十万人の男性過剰構造と、高年収層への集中（時間差一夫多妻）により、低年収層が結婚のスタートラインから排除されている。</p>
+          </div>
+          <button class="factor-action btn-open-modal" data-id="report-intelligence">配偶者市場分析を熟読 &rarr;</button>
+        </div>
+
+        <div class="factor-card">
+          <div>
+            <span class="factor-tag">カテゴリ B</span>
+            <h3 class="factor-title">支援金の「子減らし税」化</h3>
+            <p class="factor-text">社会保険料上乗せによる『支援金』が独身・未婚層の可処分所得を削り、結婚資金の蓄積を直接阻害するカニバリズムが発生。</p>
+          </div>
+          <button class="factor-action btn-open-modal" data-id="report-summary">政策自己矛盾の検証 &rarr;</button>
+        </div>
+
+        <div class="factor-card">
+          <div>
+            <span class="factor-tag">カテゴリ C</span>
+            <h3 class="factor-title">スペック地獄と金利高騰</h3>
+            <p class="factor-text">マッチング市場のスクリーニング過酷化に加え、国債利回り2.78%に伴う住宅ローン高騰が、マイホーム購入と結婚を断念させる。</p>
+          </div>
+          <button class="factor-action btn-open-modal" data-id="report-summary">経済・婚活分析を開く &rarr;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reports Archive Section (DES-03) -->
+    <section class="reports-section" id="reports-section">
+      <h2 class="section-title">蓄積レポートアーカイブ</h2>
+      <p class="section-desc">定量的データおよび詳細インテリジェンス分析全文</p>
+
+      <div class="reports-grid" id="reports-grid">
+        <!-- JSにより動的生成されるカード -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal Container -->
+  <div class="modal-overlay" id="report-modal">
+    <div class="modal-box">
+      <button class="modal-close" id="modal-close-btn">&times;</button>
+      <h3 class="modal-title" id="modal-title">レポートタイトル</h3>
+      <div class="modal-subtitle" id="modal-subtitle">サブタイトル</div>
+      
+      <!-- Modal Table of Contents -->
+      <div class="modal-toc" id="modal-toc-box">
+        <div class="modal-toc-title">INDEX / 目次ジャンプ</div>
+        <ul class="modal-toc-list" id="modal-toc-list">
+          <!-- JS動的注入 -->
+        </ul>
+      </div>
+
+      <div class="modal-body" id="modal-body">
+        <!-- JSにより動的注入される内容 -->
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 少子化・人口減少統計データインテリジェンス LP | 一時管理区画.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/reports-data.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
