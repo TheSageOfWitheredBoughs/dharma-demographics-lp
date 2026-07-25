@@ -1,39 +1,39 @@
 /* ==========================================================================
-   公開インテリジェンス＆統計アーカイブ - 最高峰ハイコントラスト・視認性デザイン
+   Apple Style (iPad Inspired) - 高級・超洗練ポータルダッシュボード スタイル
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=SF+Pro+Display:wght@600;700;800;900&display=swap');
 
 :root {
-  --bg-primary: #050811;
-  --bg-secondary: #0b1120;
-  --bg-card: #111a2e;
-  --bg-card-hover: #17243e;
+  --bg-primary: #000000;
+  --bg-secondary: #08080a;
+  --bg-card: #161617;
+  --bg-card-hover: #1d1d1f;
+  --bg-glass: rgba(22, 22, 23, 0.75);
   
-  --text-main: #ffffff;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
+  --text-main: #f5f5f7;
+  --text-muted: #86868b;
+  --text-dim: #6e6e73;
   
-  --accent-red: #ff4d6d;
-  --accent-red-glow: rgba(255, 77, 109, 0.4);
-  --accent-blue: #38bdf8;
-  --accent-blue-glow: rgba(56, 189, 248, 0.4);
-  --accent-cyan: #22d3ee;
-  --accent-amber: #fbbf24;
-  --accent-emerald: #34d399;
+  --apple-blue: #2997ff;
+  --apple-blue-dark: #0071e3;
+  --apple-red: #ff3b30;
+  --apple-purple: #af52de;
+  --apple-cyan: #55bef0;
+  --apple-amber: #ff9f0a;
+  --apple-green: #30d158;
 
-  --border-color: rgba(255, 255, 255, 0.1);
-  --border-hover: rgba(56, 189, 248, 0.6);
+  --border-color: rgba(255, 255, 255, 0.12);
+  --border-hover: rgba(255, 255, 255, 0.25);
 
-  --font-heading: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-apple: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro JP", "Inter", "Hiragino Kaku Gothic ProN", sans-serif;
+  --font-mono: "SF Mono", "JetBrains Mono", Consolas, monospace;
 
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  
-  --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --radius-pill: 9999px;
+  --radius-card: 24px;
+  --radius-btn: 980px;
+
+  --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 * {
@@ -45,163 +45,162 @@
 body {
   background-color: var(--bg-primary);
   color: var(--text-main);
-  font-family: var(--font-body);
-  line-height: 1.7;
+  font-family: var(--font-apple);
+  line-height: 1.5;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.015em;
 }
 
 .container {
-  max-width: 1240px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 1.8rem;
 }
 
-/* Portal Hero */
+/* Apple Floating Pill Nav Header */
+.apple-nav-bar {
+  position: sticky;
+  top: 1.2rem;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.apple-nav-inner {
+  background: rgba(22, 22, 23, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  padding: 0.6rem 1.6rem;
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.apple-nav-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: 0.02em;
+}
+
+.apple-nav-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--apple-blue);
+  background: rgba(41, 151, 255, 0.15);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-pill);
+}
+
+/* Apple Hero Section (iPad Style) */
 .portal-hero {
-  padding: 6rem 0 3.8rem;
+  padding: 4rem 0 3.5rem;
   text-align: center;
   position: relative;
-  background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.18) 0%, rgba(255, 77, 109, 0.06) 45%, transparent 75%);
 }
 
 .portal-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.5rem 1.4rem;
-  background: rgba(56, 189, 248, 0.12);
-  border: 1.5px solid var(--accent-blue);
-  color: var(--accent-blue);
-  font-size: 0.88rem;
-  font-weight: 800;
-  font-family: var(--font-mono);
-  border-radius: 50px;
-  margin-bottom: 1.6rem;
-  letter-spacing: 0.08em;
-  box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--apple-blue);
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .portal-title {
-  font-family: var(--font-heading);
-  font-size: 3.3rem;
-  font-weight: 900;
+  font-size: 3.8rem;
+  font-weight: 800;
+  line-height: 1.08;
   margin-bottom: 1.4rem;
   letter-spacing: -0.03em;
-  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 60%, #94a3b8 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #a1a1a6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  line-height: 1.2;
 }
 
 .portal-lead {
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   color: var(--text-muted);
-  max-width: 800px;
+  max-width: 780px;
   margin: 0 auto 2.5rem;
-  line-height: 1.85;
+  line-height: 1.6;
   font-weight: 500;
 }
 
-/* Dashboard Grid */
+/* Dashboard Bento Grid Section */
 .dashboard-section {
-  padding: 2.5rem 0 6.5rem;
+  padding: 1rem 0 6rem;
 }
 
 .portal-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 2.2rem;
 }
 
+/* Apple Card (Bento Box Design) */
 .portal-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 2.6rem;
+  border-radius: var(--radius-card);
+  padding: 3rem 2.6rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   transition: var(--transition);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(12px);
-}
-
-.portal-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 5px;
-  background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
-  opacity: 0.8;
-  transition: var(--transition);
-}
-
-.portal-card-demographics::before {
-  background: linear-gradient(90deg, var(--accent-red), var(--accent-amber));
-}
-
-.portal-card-lifetable::before {
-  background: linear-gradient(90deg, var(--accent-blue), var(--accent-emerald));
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
 .portal-card:hover {
   background: var(--bg-card-hover);
   border-color: var(--border-hover);
-  transform: translateY(-8px);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
-}
-
-.portal-card:hover::before {
-  height: 6px;
-  opacity: 1;
+  transform: scale(1.015);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
 }
 
 .portal-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.5rem;
 }
 
 .portal-card-tag {
-  font-size: 0.8rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  padding: 0.35rem 0.9rem;
-  border-radius: 50px;
-  letter-spacing: 0.06em;
-  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.03em;
 }
 
 .tag-active {
-  background: rgba(52, 211, 153, 0.15);
-  color: var(--accent-emerald);
-  border: 1px solid rgba(52, 211, 153, 0.4);
-  box-shadow: 0 0 15px rgba(52, 211, 153, 0.2);
+  background: rgba(48, 209, 88, 0.15);
+  color: var(--apple-green);
+  border: 1px solid rgba(48, 209, 88, 0.3);
 }
 
-/* Quick Stat Chips (大型・超視認性化) */
+/* Quick Stat Chips (Apple Style Big Metric Grid) */
 .quick-stats-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.8rem;
-  margin-bottom: 1.6rem;
-  background: rgba(0, 0, 0, 0.25);
-  padding: 0.8rem;
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  gap: 0.9rem;
+  margin-bottom: 1.8rem;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .stat-chip {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border-color);
-  padding: 0.6rem 0.8rem;
-  border-radius: var(--radius-sm);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -209,108 +208,112 @@ body {
 
 .stat-chip-label {
   font-size: 0.72rem;
-  color: var(--text-muted);
-  font-weight: 700;
+  color: var(--text-dim);
+  font-weight: 600;
   margin-bottom: 0.2rem;
 }
 
 .stat-chip-val {
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   font-weight: 800;
   color: #ffffff;
-  font-family: var(--font-mono);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 .portal-card-title {
-  font-family: var(--font-heading);
-  font-size: 1.55rem;
+  font-size: 1.7rem;
   font-weight: 800;
   color: #ffffff;
-  margin-bottom: 0.9rem;
-  line-height: 1.35;
-  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
 }
 
 .portal-card-desc {
-  font-size: 0.98rem;
+  font-size: 1.02rem;
   color: var(--text-muted);
-  line-height: 1.75;
-  margin-bottom: 1.8rem;
+  line-height: 1.65;
+  margin-bottom: 2rem;
 }
 
 .portal-card-features {
   list-style: none;
-  margin-bottom: 2.4rem;
+  margin-bottom: 2.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 1.4rem;
+  padding-top: 1.5rem;
 }
 
 .portal-card-features li {
-  font-size: 0.9rem;
-  color: #cbd5e1;
-  margin-bottom: 0.7rem;
+  font-size: 0.92rem;
+  color: #d2d2d7;
+  margin-bottom: 0.75rem;
   display: flex;
   align-items: center;
-  gap: 0.7rem;
-  font-weight: 600;
+  gap: 0.75rem;
+  font-weight: 500;
 }
 
 .portal-card-features li::before {
-  content: "❖";
-  color: var(--accent-blue);
-  font-size: 0.85rem;
+  content: "•";
+  color: var(--apple-blue);
+  font-size: 1.4rem;
+  line-height: 0;
 }
 
+/* Apple Style CTA Button */
 .btn-launch {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
   width: 100%;
-  padding: 1rem;
-  background: linear-gradient(135deg, var(--accent-blue), #0284c7);
+  padding: 0.95rem;
+  background: var(--apple-blue-dark);
   color: #ffffff;
   font-size: 1.05rem;
-  font-weight: 800;
+  font-weight: 700;
   text-decoration: none;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-btn);
   transition: var(--transition);
-  box-shadow: 0 4px 20px var(--accent-blue-glow);
-  letter-spacing: 0.02em;
+  box-shadow: 0 4px 15px rgba(0, 113, 227, 0.3);
 }
 
 .btn-launch:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px var(--accent-blue-glow);
+  background: #0077ed;
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 113, 227, 0.5);
 }
 
 .btn-launch-red {
-  background: linear-gradient(135deg, var(--accent-red), #e11d48);
-  box-shadow: 0 4px 20px var(--accent-red-glow);
+  background: #e11d48;
+  box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
 }
 
 .btn-launch-red:hover {
-  box-shadow: 0 8px 30px var(--accent-red-glow);
+  background: #f43f5e;
+  box-shadow: 0 8px 25px rgba(225, 29, 72, 0.5);
 }
 
 footer {
   border-top: 1px solid var(--border-color);
-  padding: 2.8rem 0;
+  padding: 3rem 0;
   text-align: center;
   color: var(--text-dim);
-  font-size: 0.9rem;
-  background: var(--bg-secondary);
+  font-size: 0.85rem;
+  background: var(--bg-primary);
 }
 
 @media (max-width: 768px) {
   .portal-title {
-    font-size: 2.3rem;
+    font-size: 2.5rem;
+  }
+  .portal-grid {
+    grid-template-columns: 1fr;
   }
   .quick-stats-row {
     grid-template-columns: 1fr;
   }
-  .portal-grid {
-    grid-template-columns: 1fr;
+  .portal-card {
+    padding: 2rem 1.6rem;
   }
 }
