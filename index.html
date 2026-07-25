@@ -21,7 +21,7 @@
       <h1 class="portal-title">公開統計＆分析インテリジェンス ハブ</h1>
       <p class="portal-lead">
         各種公開統計データ、人口爆縮動態、構造分析LPへアクセスするための一覧ポータルダッシュボードです。<br>
-        すべてのコンテンツはオープンアクセス（パスワードなし）で即座に閲覧いただけます。
+        すべてのコンテンツはオープンアクセス（パスワードなし）で即座に直感閲覧いただけます。
       </p>
     </div>
   </header>
@@ -31,27 +31,69 @@
     <div class="portal-grid">
       
       <!-- Card 1: Demographics LP -->
-      <div class="portal-card">
+      <div class="portal-card portal-card-demographics">
         <div>
-          <span class="portal-card-tag tag-active">公開中 / LIVE</span>
+          <div class="portal-card-header">
+            <span class="portal-card-tag tag-active">公開中 / LIVE</span>
+            <span style="font-size: 0.8rem; color: var(--text-dim); font-weight: 600;">2026.7 更新</span>
+          </div>
+
           <h2 class="portal-card-title">少子化・人口減少 統計データインテリジェンス LP</h2>
+          
+          <!-- Quick Stat Chips -->
+          <div class="quick-stats-row">
+            <div class="stat-chip">
+              <span class="stat-chip-label">2025年 出生数</span>
+              <span class="stat-chip-val" style="color: var(--accent-red);">67.1 万人</span>
+            </div>
+            <div class="stat-chip">
+              <span class="stat-chip-label">2045年 生涯無子率</span>
+              <span class="stat-chip-val" style="color: var(--accent-amber);">50.0 %</span>
+            </div>
+            <div class="stat-chip">
+              <span class="stat-chip-label">韓国 過去最低</span>
+              <span class="stat-chip-val" style="color: var(--accent-cyan);">0.72</span>
+            </div>
+          </div>
+
           <p class="portal-card-desc">
             日本の2025年出生数67.1万人（過去最少）、2045年生涯無子率50%推計。3大構造要因（婚姻前の断絶、支援金カニバリズム、婚活・住宅金利高騰）の冷徹な定量データと分析正本。
           </p>
           <ul class="portal-card-features">
-            <li>ビッグナンバーカウントアップ表示</li>
-            <li>Chart.js 動的推移グラフ（1970-2045）</li>
-            <li>一次ソース蓄積レポート全文閲覧モーダル</li>
+            <li>スクロール連動 ビッグナンバー・カウントアップ</li>
+            <li>Chart.js インタラクティブ推移グラフ (1970 - 2045)</li>
+            <li>一次ソース蓄積レポート全文閲覧モーダル ＋ 目次ジャンプ</li>
           </ul>
         </div>
-        <a href="./demographics/index.html" class="btn-launch">このサイトを開く &rarr;</a>
+        <a href="./demographics/index.html" class="btn-launch btn-launch-red">このサイトを開く &rarr;</a>
       </div>
 
       <!-- Card 2: Marriage Lifetable Dashboard -->
-      <div class="portal-card">
+      <div class="portal-card portal-card-lifetable">
         <div>
-          <span class="portal-card-tag tag-active">公開中 / LIVE</span>
+          <div class="portal-card-header">
+            <span class="portal-card-tag tag-active">公開中 / LIVE</span>
+            <span style="font-size: 0.8rem; color: var(--text-dim); font-weight: 600;">人口問題研究 2024.9</span>
+          </div>
+
           <h2 class="portal-card-title">結婚の多相生命表 実証データダッシュボード</h2>
+          
+          <!-- Quick Stat Chips -->
+          <div class="quick-stats-row">
+            <div class="stat-chip">
+              <span class="stat-chip-label">未婚男性 死亡年齢</span>
+              <span class="stat-chip-val" style="color: var(--accent-red);">72.40 歳</span>
+            </div>
+            <div class="stat-chip">
+              <span class="stat-chip-label">有配偶者との差</span>
+              <span class="stat-chip-val" style="color: #f43f5e;">-12.80 年</span>
+            </div>
+            <div class="stat-chip">
+              <span class="stat-chip-label">行動要因影響</span>
+              <span class="stat-chip-val" style="color: var(--accent-emerald);">92.3 %</span>
+            </div>
+          </div>
+
           <p class="portal-card-desc">
             人口問題研究（2024.9）別府志海 氏らの動態研究に基づく多相生命表。配偶関係別の平均死亡年齢差（未婚男性の死亡リスク）や、有配偶期間短縮（-10年）の行動要因分解。
           </p>

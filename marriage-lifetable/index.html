@@ -30,6 +30,31 @@
     .animate-layout-change {
       animation: layoutPulse 0.4s ease-out forwards;
     }
+
+    /* メーターバーデザイン */
+    .meter-bg {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .meter-fill-blue {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #60a5fa);
+      border-radius: 4px;
+    }
+    .meter-fill-red {
+      height: 100%;
+      background: linear-gradient(90deg, #ef4444, #f43f5e);
+      border-radius: 4px;
+    }
+    .meter-fill-pink {
+      height: 100%;
+      background: linear-gradient(90deg, #ec4899, #f472b6);
+      border-radius: 4px;
+    }
   </style>
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans h-screen w-screen overflow-hidden antialiased select-none">
@@ -54,7 +79,7 @@
       <div class="space-y-2">
         <div class="flex items-center justify-between landscape:block">
           <div>
-            <a href="../index.html" class="inline-block bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-[10px] font-semibold px-2 py-0.5 rounded-full mb-1">&larr; ポータル一覧へ戻る</a><br>
+            <a href="../index.html" class="inline-block bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-[10px] font-bold px-2.5 py-0.5 rounded-full mb-1 transition">&larr; ダッシュボード一覧へ戻る</a><br>
             <span class="inline-block bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] font-semibold px-2 py-0.5 rounded-full">人口問題研究 2024.9</span>
             <h1 class="text-xs font-bold text-slate-100 mt-1 leading-tight">結婚の多相生命表<br class="hidden landscape:block"><span class="text-slate-400 font-normal"> 実証データ一覧</span></h1>
           </div>
@@ -104,65 +129,98 @@
 
         <!-- 縦向き: 1列スタック / 横向き: 2列グリッド -->
         <div class="grid grid-cols-1 landscape:grid-cols-2 gap-3.5">
+          
           <!-- 男性データカード -->
-          <div class="bg-slate-950/70 border border-slate-800 p-3.5 rounded-xl shadow-inner space-y-2">
+          <div class="bg-slate-950/80 border border-slate-800 p-4 rounded-xl shadow-inner space-y-3">
             <div class="flex justify-between items-center">
               <span class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
                 <span class="w-2 h-2 rounded-full bg-blue-400"></span> 男性データ
               </span>
-              <span class="text-[10px] text-slate-500">有配偶者との差</span>
+              <span class="text-[10px] bg-rose-950/60 text-rose-300 border border-rose-800 px-2 py-0.5 rounded-full font-bold">単身リスク極めて大</span>
             </div>
-            <div class="space-y-1.5 text-xs">
-              <div class="flex justify-between items-center bg-blue-950/40 p-2 rounded border border-blue-900/30">
-                <span class="text-slate-300 font-medium">有配偶者</span>
-                <span class="font-bold text-blue-300">85.20 歳 <span class="text-[10px] text-slate-500 font-normal">(基準)</span></span>
+            
+            <div class="space-y-2 text-xs">
+              <div class="bg-blue-950/40 p-2.5 rounded border border-blue-900/40 space-y-1">
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-200 font-bold">有配偶者</span>
+                  <span class="font-extrabold text-blue-300 text-sm">85.20 歳 <span class="text-[10px] text-slate-400 font-normal">(基準)</span></span>
+                </div>
+                <div class="meter-bg"><div class="meter-fill-blue" style="width: 100%;"></div></div>
               </div>
-              <div class="flex justify-between items-center p-2 rounded bg-slate-900/80 border border-slate-800/80">
-                <span class="text-slate-400">死別者</span>
-                <span class="font-medium text-slate-200">81.60 歳 <span class="text-rose-400 text-[10px] ml-1 font-bold">-3.60 歳</span></span>
+
+              <div class="bg-slate-900/90 p-2 rounded border border-slate-800 space-y-1">
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-400">死別者</span>
+                  <span class="font-semibold text-slate-200">81.60 歳 <span class="text-rose-400 text-[10px] ml-1 font-bold">-3.60 歳</span></span>
+                </div>
+                <div class="meter-bg"><div class="meter-fill-blue" style="width: 95.7%;"></div></div>
               </div>
-              <div class="flex justify-between items-center p-2 rounded bg-slate-900/80 border border-slate-800/80">
-                <span class="text-slate-400">離別者</span>
-                <span class="font-medium text-slate-200">74.10 歳 <span class="text-rose-400 font-bold text-[10px] ml-1">-11.10 歳</span></span>
+
+              <div class="bg-slate-900/90 p-2 rounded border border-slate-800 space-y-1">
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-400">離別者</span>
+                  <span class="font-semibold text-slate-200">74.10 歳 <span class="text-rose-400 font-bold text-[10px] ml-1">-11.10 歳</span></span>
+                </div>
+                <div class="meter-bg"><div class="meter-fill-red" style="width: 86.9%;"></div></div>
               </div>
-              <div class="flex justify-between items-center p-2 rounded bg-rose-950/30 border border-rose-900/40">
-                <span class="text-rose-300 font-bold">未婚者</span>
-                <span class="font-bold text-rose-300">72.40 歳 <span class="text-rose-400 font-extrabold text-[10px] ml-1">-12.80 歳</span></span>
+
+              <div class="bg-rose-950/40 p-2.5 rounded border border-rose-900/50 space-y-1">
+                <div class="flex justify-between items-center">
+                  <span class="text-rose-300 font-extrabold">未婚者 (最高リスク)</span>
+                  <span class="font-extrabold text-rose-300 text-sm">72.40 歳 <span class="text-rose-400 font-extrabold text-[10px] ml-1">-12.80 歳</span></span>
+                </div>
+                <div class="meter-bg"><div class="meter-fill-red" style="width: 84.9%;"></div></div>
               </div>
             </div>
           </div>
 
           <!-- 女性データカード -->
-          <div class="bg-slate-950/70 border border-slate-800 p-3.5 rounded-xl shadow-inner space-y-2">
+          <div class="bg-slate-950/80 border border-slate-800 p-4 rounded-xl shadow-inner space-y-3">
             <div class="flex justify-between items-center">
               <span class="text-xs font-bold text-pink-400 flex items-center gap-1.5">
                 <span class="w-2 h-2 rounded-full bg-pink-400"></span> 女性データ
               </span>
-              <span class="text-[10px] text-slate-500">有配偶者との差</span>
+              <span class="text-[10px] bg-slate-800 text-slate-300 border border-slate-700 px-2 py-0.5 rounded-full font-bold">配偶関係差は僅小</span>
             </div>
-            <div class="space-y-1.5 text-xs">
-              <div class="flex justify-between items-center bg-pink-950/40 p-2 rounded border border-pink-900/30">
-                <span class="text-slate-300 font-medium">有配偶者</span>
-                <span class="font-bold text-pink-300">89.91 歳 <span class="text-[10px] text-slate-500 font-normal">(基準)</span></span>
+            
+            <div class="space-y-2 text-xs">
+              <div class="bg-pink-950/40 p-2.5 rounded border border-pink-900/40 space-y-1">
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-200 font-bold">有配偶者</span>
+                  <span class="font-extrabold text-pink-300 text-sm">89.91 歳 <span class="text-[10px] text-slate-400 font-normal">(基準)</span></span>
+                </div>
+                <div class="meter-bg"><div class="meter-fill-pink" style="width: 100%;"></div></div>
               </div>
-              <div class="flex justify-between items-center p-2 rounded bg-slate-900/80 border border-slate-800/80">
-                <span class="text-slate-400">死別者</span>
-                <span class="font-medium text-slate-200">89.35 歳 <span class="text-slate-400 text-[10px] ml-1">-0.56 歳</span></span>
+
+              <div class="bg-slate-900/90 p-2 rounded border border-slate-800 space-y-1">
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-400">死別者</span>
+                  <span class="font-semibold text-slate-200">89.35 歳 <span class="text-slate-400 text-[10px] ml-1">-0.56 歳</span></span>
+                </div>
+                <div class="meter-bg"><div class="meter-fill-pink" style="width: 99.3%;"></div></div>
               </div>
-              <div class="flex justify-between items-center p-2 rounded bg-slate-900/80 border border-slate-800/80">
-                <span class="text-slate-400">離別者</span>
-                <span class="font-medium text-slate-200">88.10 歳 <span class="text-rose-400 text-[10px] ml-1">-1.81 歳</span></span>
+
+              <div class="bg-slate-900/90 p-2 rounded border border-slate-800 space-y-1">
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-400">離別者</span>
+                  <span class="font-semibold text-slate-200">88.10 歳 <span class="text-rose-400 text-[10px] ml-1">-1.81 歳</span></span>
+                </div>
+                <div class="meter-bg"><div class="meter-fill-pink" style="width: 97.9%;"></div></div>
               </div>
-              <div class="flex justify-between items-center p-2 rounded bg-slate-900/80 border border-slate-800/80">
-                <span class="text-slate-300 font-semibold">未婚者</span>
-                <span class="font-bold text-slate-200">87.42 歳 <span class="text-rose-400 text-[10px] ml-1">-2.49 歳</span></span>
+
+              <div class="bg-slate-900/90 p-2 rounded border border-slate-800 space-y-1">
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-300 font-bold">未婚者</span>
+                  <span class="font-bold text-slate-200">87.42 歳 <span class="text-rose-400 text-[10px] ml-1">-2.49 歳</span></span>
+                </div>
+                <div class="meter-bg"><div class="meter-fill-pink" style="width: 97.2%;"></div></div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="bg-slate-950/50 p-3 rounded-lg border border-slate-800 text-[11px] text-slate-400 leading-relaxed">
-          <strong class="text-slate-200">【解説・構造差】</strong> 男性は単身（未婚・離別）時の死亡リスク増大（平均寿命低下）が11〜13年と極めて大きい一方、女性の配偶関係差は2.5年未満と小さく、性別による保護効果の顕著な差異がみられます。
+        <div class="bg-slate-950/60 p-3.5 rounded-lg border border-slate-800 text-[11px] text-slate-300 leading-relaxed shadow-sm">
+          <strong class="text-amber-400">【解説・直感理解ポイント】</strong> 男性は未婚（72.40歳）および離別（74.10歳）における平均寿命低下が11〜13年と絶大であるのに対し、女性の未婚（87.42歳）の低下は2.49年に留まります。男性単身者の健康保護セーフティネット喪失が強烈な指標として現れています。
         </div>
       </div>
 
@@ -253,7 +311,7 @@
             <div class="space-y-2">
               <div>
                 <div class="flex justify-between text-[11px] mb-1">
-                  <span class="text-rose-300">行動変化 (未婚化・離婚等)</span>
+                  <span class="text-rose-300 font-bold">行動変化 (未婚化・離婚等)</span>
                   <span class="font-bold text-rose-400">92.3% (-9.6年)</span>
                 </div>
                 <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
@@ -283,7 +341,7 @@
             <div class="space-y-2">
               <div>
                 <div class="flex justify-between text-[11px] mb-1">
-                  <span class="text-rose-300">行動変化 (未婚化・離婚等)</span>
+                  <span class="text-rose-300 font-bold">行動変化 (未婚化・離婚等)</span>
                   <span class="font-bold text-rose-400">94.1% (-9.2年)</span>
                 </div>
                 <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
